@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		body{padding:0; margin:0;}
+		#top{
+			background-color: #1093c1;
+    		min-height: 450px;
+		}
+		.container{
+			width: 100%;
+			max-width:1200px;
+
+			margin: auto;
+		}
+		
+		#canvas {
+		    position: absolute;
+		    right: 40px;
+		    top: 40px;
+		    opacity: 1;
+		}
+		/*#canvas{opacity:1;top:340px;right:0}
+		#canvas{opacity:1;top:340px;right:0;width:500%}*/
+	</style>
+</head>
+<body onload="init();">
+	<header id="top">
+		<div class="container">
+			<div class="right">
+				<canvas id="canvas" width="820" height="686"></canvas>
+			</div>
+		</div>
+	</header>
+<script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+<script>"use strict";
+	var canvas,stage,exportRoot;
+	function init(){
+		canvas=document.getElementById("canvas");
+		images=images||{};
+		var manifest=[{src:"cloud.png",id:"cloud"},{src:"rocket.png",id:"rocket_1"}];
+		var loader=new createjs.LoadQueue(false);
+		loader.addEventListener("fileload",handleFileLoad);
+		loader.addEventListener("complete",handleComplete);
+		loader.loadManifest(manifest);
+	}
+	function handleFileLoad(evt){
+		if(evt.item.type=="image"){
+			images[evt.item.id]=evt.result;
+		}
+	}
+	function handleComplete(){
+		exportRoot=new lib.rocket();
+		stage=new createjs.Stage(canvas);
+		stage.addChild(exportRoot);
+		stage.update();
+		createjs.Ticker.setFPS(30);
+		createjs.Ticker.addEventListener("tick",stage);
+	}
+</script>	
+
+<!--<script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>-->
+<script type="text/javascript" src="js/easeljs-0.6.0.min.js"></script>
+<script type="text/javascript" src="js/tweenjs-0.4.0.min.js"></script>
+<script type="text/javascript" src="js/movieclip-0.6.0.min.js"></script>
+<script type="text/javascript" src="js/preloadjs-0.3.0.min.js"></script>
+<script type="text/javascript" src="js/rocketanimation.js"></script>
+</body>
+</html>
